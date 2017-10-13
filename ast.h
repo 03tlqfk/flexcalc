@@ -11,11 +11,14 @@ struct ast_leaf {
 };
 
 /* build an AST node */
-struct ast *alloc_ast(int type, struct ast *, struct ast *);
+struct ast *alloc_ast(int, struct ast *, struct ast *);
 struct ast *alloc_ast_leaf(int);
 
 /* evaluate an AST */
 int eval_ast(struct ast *);
+
 /* delete and free an AST */
 void free_ast(struct ast *);
+
+/* print an AST */
 void print_ast(struct ast *);

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include "ast.h"
 #include "parser.tab.h"
-void yyerror(char *s);
-
+void yyerror(char *);
 
 /* build an AST node */
 struct ast *alloc_ast(int type, struct ast *l, struct ast *r)
@@ -57,6 +56,7 @@ int eval_ast(struct ast *node)
 	}
 	return result;
 }
+
 /* delete and free an AST */
 void free_ast(struct ast *node)
 {
@@ -75,6 +75,7 @@ void free_ast(struct ast *node)
 	}
 }
 
+/* print an AST */
 void print_ast(struct ast *node)
 {
 	switch(node->type) {

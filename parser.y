@@ -5,6 +5,7 @@
 int yylex();
 void yyerror(char *);
 %}
+
 %union {
 	struct ast *node;
 	int value;
@@ -38,6 +39,7 @@ factor: NUMBER		{ $$ = alloc_ast_leaf($1); }
  /* C code */
 int main(void) {
 	yyparse();
+	return 0;
 }
 
 void yyerror(char *s) {
