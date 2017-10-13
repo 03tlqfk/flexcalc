@@ -2,7 +2,7 @@ TARGET = calc
 OBJECTS = lex.yy.c parser.tab.c parser.tab.h
 
 $(TARGET) : $(OBJECTS)
-	gcc -o $@ $^ -lfl
+	gcc -o $@ $^ ast.c -lfl
 
 parser.tab.c parser.tab.h : parser.y
 	bison -d $^
