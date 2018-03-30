@@ -10,15 +10,15 @@ void yyerror(char *);
 	struct ast *node;
 	int value;
 }
-%token ADD SUB MUL DIV EOL
+%token ADD SUB MUL DIV LPA RPA EOL 
 %token <value> NUMBER
-%type <node> exp factor term
+%type <node> exp factor term lpa rpa
 
 %%
 
- /* rules & actions */
+ /* rules */
 goal: 
-| goal exp EOL		{ print_ast($2); printf("= %d\n", eval_ast($2)); free_ast($2); }
+| goal exp EOL		{ printf("result=> %d\n", eval_ast($2)); free_ast($2); }
 ;
 
 exp: term		{ $$ = $1; }
@@ -32,11 +32,17 @@ term: factor		{ $$ = $1; }
 ;
 
 factor: NUMBER		{ $$ = alloc_ast_leaf($1); }
+| lpa exp rpa		{ $$ = $2; }
+;
+
+lpa : LPA		{  }
+;
+rpa : RPA		{  }
 ;
 
 %%
 
- /* C code */
+
 int main(void) {
 	yyparse();
 	return 0;

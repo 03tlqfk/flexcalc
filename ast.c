@@ -9,7 +9,7 @@ struct ast *alloc_ast(int type, struct ast *l, struct ast *r)
 {
 	struct ast *node = malloc(sizeof(struct ast));
 	if (!node) {
-		yyerror("out of space");
+		yyerror("no node");
 		exit(0);
 	}
 	node->type = type;
@@ -22,7 +22,7 @@ struct ast *alloc_ast_leaf(int value)
 {
 	struct ast_leaf *node = malloc(sizeof(struct ast_leaf));
 	if (!node) {
-		yyerror("out of space");
+		yyerror("no node");
 		exit(0);
 	}
 	node->type = NUMBER;
@@ -48,11 +48,15 @@ int eval_ast(struct ast *node)
 		case DIV:
 			result = eval_ast(node->l) / eval_ast(node->r);
 			break;
+		case LPA:
+			break;
+		case RPA:
+			break;
 		case NUMBER:
 			result = ((struct ast_leaf *)node)->value;
 			break;
 		default:
-			printf("internal error: bad node %d\n", node->type);
+			printf("error: bad node %d\n", node->type);
 	}
 	return result;
 }
@@ -67,6 +71,8 @@ void free_ast(struct ast *node)
 		case DIV:
 			free_ast(node->l);
 			free_ast(node->r);
+		case LPA:
+		case RPA:
 		case NUMBER:
 			free(node);
 			break;
@@ -75,31 +81,4 @@ void free_ast(struct ast *node)
 	}
 }
 
-/* print an AST */
-void print_ast(struct ast *node)
-{
-	switch(node->type) {
-		case ADD:
-			print_ast(node->l);
-			printf("+");
-			print_ast(node->r);
-			break;
-		case SUB:
-			print_ast(node->l);
-			printf("-");
-			print_ast(node->r);
-			break;
-		case MUL:
-			print_ast(node->l);
-			printf("*");
-			print_ast(node->r);
-			break;
-		case DIV:
-			print_ast(node->l);
-			printf("/");
-			print_ast(node->r);
-			break;
-		case NUMBER:
-			printf("%d", ((struct ast_leaf *)node)->value);
-	}
-}
+

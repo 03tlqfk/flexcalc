@@ -1,4 +1,4 @@
-/* node in the abstract syntax tree */
+/* node in the ast */
 struct ast {
 	int type;
 	struct ast *l;
@@ -10,15 +10,13 @@ struct ast_leaf {
 	int value;
 };
 
-/* build an AST node */
+/* build ast node */
 struct ast *alloc_ast(int, struct ast *, struct ast *);
 struct ast *alloc_ast_leaf(int);
 
-/* evaluate an AST */
+/* evaluate ast */
 int eval_ast(struct ast *);
 
-/* delete and free an AST */
+/* delete and free ast */
 void free_ast(struct ast *);
 
-/* print an AST */
-void print_ast(struct ast *);
